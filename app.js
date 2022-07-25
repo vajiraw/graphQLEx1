@@ -14,9 +14,7 @@ var root = {
   hello: () => {
     return 'Hello world!';
   },
-  mama: () => {
-    return 'Hello my own world!';
-  },
+  
 
 };
 
