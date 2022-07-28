@@ -6,7 +6,6 @@ const userData = require('./MOCK_DATA.json')
 
 var app = express()
 
-
 const UserType = new GraphQLObjectType({
     name: "user",
     fields: () => ({
@@ -19,10 +18,23 @@ const UserType = new GraphQLObjectType({
     })
 })
 
+/**
+ * 
+ */
 const RootQuery = new GraphQLObjectType({
     name:'QueryType',
     fields:{
+        /**
+         * Thiis method is to return all users.
+         */
         getAllUsers:{
+            type : new GraphQLList(UserType),
+            args : {id : {type : GraphQLInt}},
+            resolve(parent, args){
+                return userData
+            }
+        }, 
+        getUserById:{
             type : new GraphQLList(UserType),
             args : {id : {type : GraphQLInt}},
             resolve(parent, args){
@@ -31,10 +43,16 @@ const RootQuery = new GraphQLObjectType({
         },        
     }
 })
-const Mutation = new graphql.GraphQLObjectType({
-    name:'RootMutator',
-    fields: () => {}
-})
+
+// const Mutation = new graphql.GraphQLObjectType({
+//     name:'RootMutator',
+//     fields: {
+//         createUser: {
+//             type : UserType,
+//             // args : 
+//         }
+//     }
+// })
 
 const schema = new GraphQLSchema({query:RootQuery})  //,mutation:MutationRoot
 
